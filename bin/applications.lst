@@ -1,9 +1,9 @@
 KMeans
 #LinearRegression
-#LogisticRegression
+LogisticRegression
 #SVM
-#DecisionTree
-#MatrixFactorization
+DecisionTree
+MatrixFactorization
 #PageRank
 #TriangleCount
 #ShortestPaths

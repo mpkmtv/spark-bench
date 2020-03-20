@@ -9,8 +9,9 @@ if [ -f "${bin}/../conf/env.sh" ]; then
   set +a
 fi
 
-#paths
+#paths maprfs:////dw/SparkBench/LinearRegression/
 APP=LinearRegression
+DATA_HDFS=maprfs:///dw/SparkBench
 INPUT_HDFS=${DATA_HDFS}/${APP}/Input
 OUTPUT_HDFS=${DATA_HDFS}/${APP}/Output
 

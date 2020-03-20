@@ -100,29 +100,11 @@ function teardown() {
 }
 
 function set_gendata_opt() {
-  SPARK_OPT=
   if [ ! -z "$SPARK_RPC_ASKTIMEOUT" ]; then
     SPARK_OPT="${SPARK_OPT} --conf spark.rpc.askTimeout=${SPARK_RPC_ASKTIMEOUT}"
   fi
-#memory fraction is deprecated in spark 2.0.1
-#  if [ ! -z "$SPARK_STORAGE_MEMORYFRACTION" ]; then
-#    SPARK_OPT="${SPARK_OPT} --conf spark.storage.memoryFraction=${SPARK_STORAGE_MEMORYFRACTION}"
-#  fi
-  if [ ! -z "$SPARK_EXECUTOR_MEMORY" ]; then
-    SPARK_OPT="${SPARK_OPT} --conf spark.executor.memory=${SPARK_EXECUTOR_MEMORY}"
-  fi
-  if [ ! -z "$SPARK_SERIALIZER" ]; then
-    SPARK_OPT="${SPARK_OPT} --conf spark.serializer=${SPARK_SERIALIZER}"
-  fi
-  if [ ! -z "$SPARK_RDD_COMPRESS" ]; then
-    SPARK_OPT="${SPARK_OPT} --conf spark.rdd.compress=${SPARK_RDD_COMPRESS}"
-  fi
-  if [ ! -z "$SPARK_IO_COMPRESSION_CODEC" ]; then
-    SPARK_OPT="${SPARK_OPT} --conf spark.io.compression.codec=${SPARK_IO_COMPRESSION_CODEC}"
-  fi
-  if [ ! -z "$SPARK_DEFAULT_PARALLELISM" ]; then
-    SPARK_OPT="${SPARK_OPT} --conf spark.default.parallelism=${SPARK_DEFAULT_PARALLELISM}"
-  fi
+  SPARK_OPT=
+
   YARN_OPT=
   if [ "$MASTER" = "yarn" ]; then
     if [ ! -z "$SPARK_EXECUTOR_INSTANCES" ]; then
@@ -130,6 +112,9 @@ function set_gendata_opt() {
     fi
     if [ ! -z "$SPARK_EXECUTOR_CORES" ]; then
       YARN_OPT="${YARN_OPT} --executor-cores ${SPARK_EXECUTOR_CORES}"
+    fi
+    if [ ! -z "$SPARK_EXECUTOR_MEMORY" ]; then
+      YARN_OPT="${YARN_OPT} --executor-memory ${SPARK_EXECUTOR_MEMORY}"
     fi
     if [ ! -z "$SPARK_DRIVER_MEMORY" ]; then
       YARN_OPT="${YARN_OPT} --driver-memory ${SPARK_DRIVER_MEMORY}"
