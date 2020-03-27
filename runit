@@ -1,0 +1,36 @@
+alias h='hadoop fs'
+
+for i in 1 2 
+do 
+  h -rm -f -r /benchmarks/terasort/out
+  /opt/mapr/spark/spark-2.4.4/bin/spark-submit --class com.mapr.spark.scale.terasort.TeraSort   --master yarn  --num-executors 25 --executor-cores 4 --executor-memory 32g --driver-memory 10g --deploy-mode cluster   --conf spark.network.sasl.serverAlwaysEncryp=true --conf spark.io.encryption.enabled=true   maprfs:///tmp/spark-on-k8s-scale-0.1.jar  /benchmarks/terasort/in /benchmarks/terasort/out
+done
+
+
+for i in 1 2 
+do 
+  h -rm -f -r /benchmarks/terasort/out
+  /opt/mapr/spark/spark-2.4.4/bin/spark-submit --class com.mapr.spark.scale.terasort.TeraSort   --master yarn  --num-executors 25 --executor-cores 4 --executor-memory 32g --driver-memory 10g --deploy-mode cluster   --conf spark.authenticate.enableSaslEncryption=true  maprfs:///tmp/spark-on-k8s-scale-0.1.jar  /benchmarks/terasort/in /benchmarks/terasort/out
+done
+
+exit
+
+
+export SPARK_RUN_OPT="--conf spark.network.sasl.serverAlwaysEncryp=true --conf spark.io.encryption.enabled=true"
+for i in 1 2 
+do
+  bin/run.sh 
+done
+export SPARK_RUN_OPT="--conf spark.authenticate.enableSaslEncryption=true"
+for i in 1 2 3 
+do
+  bin/run.sh 
+done
+
+exit
+export SPARK_RUN_OPT="--conf spark.network.sasl.serverAlwaysEncryp=true"
+for i in 1 2 3 
+do
+  bin/run.sh 
+done
+
